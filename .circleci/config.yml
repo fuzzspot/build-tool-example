@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    branches:
+      only:
+        - master
+    working_directory: -/app
+    steps:
+      - checkout
+      - run:
+          name: install meteor
+          command: |
+            command -v meteor >/dev/null 2>&1 || curl https://install.meteor.com | /bin/sh
+      - run:
+          name: check versions
+          command: |
+            echo "Meteor version:"
+            meteor --versions
+            which meteor
+            echo "Meteor node version:"
+            meteor node -v
+            echo "Meteor npm version:"
+            meteor npm -v
+      - run:
+          name: install npm packages
+          command: meteor npm i
+      - run:
+          name: Build the Meteor app
+          command: |
+            meteor build ./builds
+            cd ./builds && ls
