@@ -5,7 +5,7 @@ jobs:
     branches:
       only:
         - master
-    working_directory: -/app
+    working_directory: ~/app
     steps:
       - checkout
       - run:
