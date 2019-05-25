@@ -30,3 +30,11 @@ jobs:
           command: |
             meteor build ./builds
             cd ./builds && ls
+      - run:
+          name: Transfer Binary
+          command: |
+            scp ./builds/app.tar.gz $USER@$SERVER:/home/circleci/builds
+      - run:
+          name: Deploy
+          command: |
+            ssh -t $USER@$SERVER "./deploy.sh"
